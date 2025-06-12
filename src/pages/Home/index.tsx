@@ -1,4 +1,5 @@
+import { Box } from '@/components/core/Box';
 function Home() {
-  return <div className='bg-slate-500'>this is mainPage</div>;
+  return <Box>this is mainPage</Box>;
 }
 export default Home;
