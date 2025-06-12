@@ -12,10 +12,10 @@ type Props<T extends ValidTags = 'p'> = {
 
 export function Typography<T extends ValidTags = 'p'>({
   backgroundColor,
-  color = 'text-neutral-pure-black',
+  color = 'text-neutral-fg-1-default',
   align,
   className,
-  variant = 'text-title-small',
+  variant = 'text-body-2',
   tag,
   children,
   ...props
@@ -23,7 +23,7 @@ export function Typography<T extends ValidTags = 'p'>({
   const boxTag = tag || ('p' as T);
 
   return (
-    <Box<T> tag={boxTag} className={classnames(color, backgroundColor, align, className)} {...props}>
+    <Box<T> tag={boxTag} className={classnames(color, backgroundColor, align, className, variant)} {...props}>
       {children}
     </Box>
   );

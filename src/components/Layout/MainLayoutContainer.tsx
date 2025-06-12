@@ -4,9 +4,9 @@ import { GridContainer } from '@/components/core/GridContainer';
 
 export function MainLayoutContainer({ children }: { children: React.ReactNode }) {
   return (
-    <GridContainer direction='flex-col' className='mx-auto min-h-screen h-full' dir='rtl'>
+    <GridContainer direction='flex-col' className='mx-auto min-h-screen h-full bg-gray-300'>
       <Box tag='header'></Box>
-      <Box tag='main' className='flex-1 px-4'>
+      <Box tag='main' className='flex-1 flex items-center justify-center'>
         {children}
       </Box>
       <Box tag='footer' className='p-4 text-center'></Box>

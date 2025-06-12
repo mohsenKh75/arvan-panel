@@ -13,6 +13,7 @@
     "test": "echo \"No tests defined\" && exit 0"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "axois": "^0.0.1-security",
     "clsx": "^2.1.1",
@@ -20,6 +21,8 @@
     "lazysizes": "^5.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.57.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.5"
   },
   "devDependencies": {
