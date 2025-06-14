@@ -1,15 +1,19 @@
 import { classnames } from '@/utils/classnames';
 import { Box } from '../Box';
 import { Typography } from '../Typography';
+import React from 'react';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   state?: 'default' | 'hover' | 'active' | 'fill' | 'readOnly' | 'disabled' | 'error';
   inputSize?: 'sm' | 'lg';
-  error?: boolean;
+  error?: string;
   title?: string;
 }
 
-export function Input({ error = false, state = 'default', inputSize = 'sm', className, title, ...props }: InputProps) {
+function InputComponent(
+  { error, state = 'default', inputSize = 'sm', className, title, ...props }: InputProps,
+  ref: React.Ref<HTMLInputElement>
+) {
   const baseStyle = `
     w-full rounded-xl border px-4 outline-none transition-all
     placeholder:text-gray-400
@@ -31,11 +35,19 @@ export function Input({ error = false, state = 'default', inputSize = 'sm', clas
         </Typography>
       )}
       <input
+        ref={ref}
         {...props}
         readOnly={state === 'readOnly'}
         disabled={state === 'disabled'}
         className={classnames(baseStyle, sizeStyle, borderColor, className)}
       />
+      {error && (
+        <Typography variant='text-caption-1-strong' color='text-error-default'>
+          {error}
+        </Typography>
+      )}
     </Box>
   );
 }
+
+export const Input = React.forwardRef(InputComponent);

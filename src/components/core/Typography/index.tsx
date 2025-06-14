@@ -7,6 +7,7 @@ type Props<T extends ValidTags = 'p'> = {
   variant?: TextFontSizeType;
   color?: TextColorClassNameType;
   align?: 'text-left' | 'text-center' | 'text-right';
+  bold?: boolean;
 } & BoxProps<T> &
   JSX.IntrinsicElements[T];
 
@@ -17,13 +18,18 @@ export function Typography<T extends ValidTags = 'p'>({
   className,
   variant = 'text-body-2',
   tag,
+  bold,
   children,
   ...props
 }: Props<T>): ReactElement {
   const boxTag = tag || ('p' as T);
 
   return (
-    <Box<T> tag={boxTag} className={classnames(color, backgroundColor, align, className, variant)} {...props}>
+    <Box<T>
+      tag={boxTag}
+      className={classnames(color, backgroundColor, align, className, variant, { 'font-bold': bold })}
+      {...props}
+    >
       {children}
     </Box>
   );
