@@ -14,7 +14,8 @@
     "error-default": "#D61E20",
     "error-hover": "#AB181A",
     "error-press": "#801213",
-    "error-disable": "#EFA5A6"
+    "error-disable": "#EFA5A6",
+    "info-fg-1-default": "#0172B4"
   },
   "fontSize": {
     "body-2": [
