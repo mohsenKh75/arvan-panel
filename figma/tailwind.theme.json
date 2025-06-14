@@ -9,6 +9,7 @@
     "neutral-press": "#999999",
     "neutral-disable": "#CCCCCC",
     "neutral-st-2-default": "#CCCCCC",
+    "neutral-st-3-default": "#E6E6E6",
     "neutral-fg-1-default": "#333333",
     "error-default": "#D61E20",
     "error-hover": "#AB181A",
@@ -38,6 +39,14 @@
         "letterSpacing": -2,
         "fontWeight": 600,
         "lineHeight": "24px"
+      }
+    ],
+    "caption-1-strong": [
+      12,
+      {
+        "letterSpacing": -2,
+        "fontWeight": 600,
+        "lineHeight": "16px"
       }
     ]
   }
