@@ -11,6 +11,7 @@ export default {
     extend: {
       colors: {
         ...figmaTheme.colors,
+        ...figmaTheme.fontSize,
         background: 'var(--background)',
         foreground: 'var(--foreground)'
       }

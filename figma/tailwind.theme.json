@@ -1,19 +1,53 @@
 {
   "colors": {
-    "neutral-pure-black": "#000000",
-    "neutral-pure-white": "#FFFFFF",
-    "neutral-base": "##1F2933",
-    "object-fill": "#F3F3F3",
-    "object-lowkey": "#959595",
-    "primary-active": "#DFD9EA"
+    "primary-default": "#009595",
+    "primary-hover": "#007070",
+    "primary-press": "#004A4A",
+    "primary-disable": "#99E3E3",
+    "neutral-default": "#FFFFFF",
+    "neutral-hover": "#B3B3B3",
+    "neutral-press": "#999999",
+    "neutral-disable": "#CCCCCC",
+    "neutral-st-2-default": "#CCCCCC",
+    "neutral-st-3-default": "#E6E6E6",
+    "neutral-fg-1-default": "#333333",
+    "error-default": "#D61E20",
+    "error-hover": "#AB181A",
+    "error-press": "#801213",
+    "error-disable": "#EFA5A6",
+    "info-fg-1-default": "#0172B4"
   },
   "fontSize": {
-    "title-small": [
-      20,
+    "body-2": [
+      14,
       {
-        "letterSpacing": 0,
-        "fontWeight": 700,
+        "letterSpacing": -2,
+        "fontWeight": 400,
         "lineHeight": "20px"
+      }
+    ],
+    "body-2-strong": [
+      14,
+      {
+        "letterSpacing": -2,
+        "fontWeight": 600,
+        "lineHeight": "20px"
+      }
+    ],
+    "title-3": [
+      18,
+      {
+        "letterSpacing": -2,
+        "fontWeight": 600,
+        "lineHeight": "24px"
+      }
+    ],
+    "caption-1-strong": [
+      12,
+      {
+        "letterSpacing": -2,
+        "fontWeight": 600,
+        "lineHeight": "16px"
       }
     ]
   }
