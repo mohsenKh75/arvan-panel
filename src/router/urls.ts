@@ -4,5 +4,6 @@ export const URLS = {
   HOME: '/',
   PROFILE: PROFILE,
   LOGIN: `${PROFILE}/login`,
-  REGISTER: `${PROFILE}/register`
+  REGISTER: `${PROFILE}/register`,
+  article: `/article`
 };
