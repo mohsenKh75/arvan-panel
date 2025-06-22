@@ -7,6 +7,7 @@ import { useApi } from '@/hooks/useApi';
 import { useEffect } from 'react';
 import ArticlesSection from './ArticlesSection';
 import { Article } from '@/apis/transformers';
+import { Skeleton } from '@/components/core/Skeleton';
 
 function Home() {
   const {
@@ -28,9 +29,7 @@ function Home() {
           <Typography variant='text-title-3'>All posts</Typography>
         </GridContainer>
         {pending
-          ? Array.from({ length: 6 }).map((_, idx) => (
-              <Box key={idx} className='h-[66px] my-4 mx-4 rounded-md bg-skeleton animate-skeleton'></Box>
-            ))
+          ? Array.from({ length: 6 }).map((_, idx) => <Skeleton key={idx} />)
           : articles && <ArticlesSection articles={articles.articles} />}
       </Box>
     </MainLayout>
