@@ -1,13 +1,16 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import { Spinner } from './Spinner';
+import { classnames } from '@/utils/classnames';
+import { Image } from '../Image';
 import { Box } from '../Box';
 
 type ButtonVariant = 'primary' | 'primary_danger' | 'secondary';
-
+type ButtonLayout = 'button' | 'icon';
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
-
   pending?: boolean;
+  layout?: ButtonLayout;
+  iconSrc?: string;
 }
 
 const COLORS_VARIANTS = {
@@ -26,19 +29,31 @@ export function Button({
   disabled = false,
   className = '',
   type = 'button',
+  layout = 'button',
+  iconSrc,
   ...props
 }: Props) {
   const isDisabled = disabled || pending;
   const styles = COLORS_VARIANTS[variant];
-  <Box className='bg-error-default disabled:bg-primary-press'></Box>;
   return (
     <button
-      className={`px-4 py-2 rounded-md font-medium text-sm flex items-center justify-center gap-2 transition-all ${styles} ${className}`}
+      className={classnames(
+        'rounded-md font-medium text-sm flex items-center justify-center gap-2 transition-all cursor-pointer',
+        styles,
+        className,
+        { 'px-4 py-2': layout === 'button' }
+      )}
       disabled={isDisabled}
       type={type}
       {...props}
     >
-      {pending ? <Spinner color={variant === 'secondary' ? 'border-neutral-fg-1-default' : undefined} /> : children}
+      {pending ? (
+        <Spinner color={variant === 'secondary' ? 'border-neutral-fg-1-default' : undefined} />
+      ) : layout === 'icon' ? (
+        <Image src={iconSrc} className='w-5 h-4 m-2' />
+      ) : (
+        children
+      )}
     </button>
   );
 }
