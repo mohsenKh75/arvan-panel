@@ -27,7 +27,7 @@ export default function Article() {
   const [param] = useSearchParams();
   const slug = param.get(EDIT_PARAM);
   const { request: requestGetArticle, data: articleData } = useApi({ apiMethod: getArticle });
-  const { request: requestPostArticle } = useApi<ArticleFormData & { slug: string }>({
+  const { request: requestPostArticle, pending: pendingPostArticle } = useApi<ArticleFormData & { slug: string }>({
     apiMethod: slug ? updateArticle : createArticle
   });
 
@@ -69,7 +69,9 @@ export default function Article() {
             <Input {...register('description')} placeholder='write here' title='description' />
             <Input {...register('body')} inputSize='field' placeholder='write here' title='body' />
             <Box>
-              <Button type='submit'>Submit</Button>
+              <Button type='submit' pending={pendingPostArticle}>
+                Submit
+              </Button>
             </Box>
           </GridContainer>
           <GridContainer
