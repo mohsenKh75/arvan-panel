@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
 import { apiHandler } from '@/utils/apiHandler';
-import { POST_LOGIN_DATA, POST_REGISTER_DATA } from '@/apis/auth/endpints';
+import { GET_CURRENT_USER, POST_LOGIN_DATA, POST_REGISTER_DATA } from '@/apis/auth/endpints';
 
 interface User {
   user: {
@@ -71,6 +71,26 @@ export const registerAction =
     }
   };
 
+export const getCurrentUserAction =
+  () =>
+  async (dispatch: Dispatch): Promise<User> => {
+    dispatch(setLoading(true));
+    try {
+      const res = await apiHandler<User>({
+        ep: GET_CURRENT_USER,
+        method: 'GET'
+      });
+
+      dispatch(setUser(res));
+      return res;
+    } catch (err: any) {
+      const message = err?.response?.data?.message || 'Fetching user failed';
+      dispatch(setError(message));
+      throw new Error(message);
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
 const authSlice = createSlice({
   name: 'auth',
   initialState,

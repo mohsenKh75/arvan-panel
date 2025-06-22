@@ -10,6 +10,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { URLS } from '@/router/urls';
 import { loginAction } from '@/store/authSlice';
 import { useAsyncAction } from '@/hooks/useAsyncAction';
+import { useEffect } from 'react';
+import { useUser } from '@/hooks/useUser';
 
 const loginSchema = zod.object({
   email: zod.string().email({ message: 'Invalid email address' }),
@@ -19,6 +21,7 @@ const loginSchema = zod.object({
 type LoginFormData = zod.infer<typeof loginSchema>;
 
 export default function Login() {
+  const { isLoggedIn } = useUser();
   const {
     register,
     handleSubmit,
@@ -34,7 +37,11 @@ export default function Login() {
   function submitHandler(data: LoginFormData) {
     loginRequest(data);
   }
-
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(URLS.HOME);
+    }
+  }, [isLoggedIn]);
   return (
     <GridContainer
       direction='flex-col'
@@ -87,3 +94,5 @@ export default function Login() {
     </GridContainer>
   );
 }
+
+Login.layoutProps = { position: 'centered' };
