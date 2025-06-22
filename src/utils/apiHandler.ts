@@ -1,4 +1,3 @@
-import { BASE_URL } from '@/apis/constants';
 import { axiosInstance as axios } from './axiosInstance';
 
 export interface ApiRequest<Body = void> {
@@ -12,7 +11,7 @@ export async function apiHandler<Response, Body = void>(req: ApiRequest<Body>): 
   try {
     const response = await axios({
       method,
-      url: BASE_URL + ep.replace(/^\/+/, ''),
+      url: `/prx/${ep.replace(/^\/+/, '')}`,
       data: payload
     });
     return response.data;

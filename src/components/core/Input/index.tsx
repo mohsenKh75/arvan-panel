@@ -1,19 +1,23 @@
 import { classnames } from '@/utils/classnames';
 import { Box } from '../Box';
 import { Typography } from '../Typography';
-import React from 'react';
+import React, { InputHTMLAttributes, TextareaHTMLAttributes, ChangeEvent, Ref, LegacyRef } from 'react';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface SharedProps {
   state?: 'default' | 'hover' | 'active' | 'fill' | 'readOnly' | 'disabled' | 'error';
-  inputSize?: 'sm' | 'lg';
+  inputSize?: 'sm' | 'lg' | 'field';
   error?: string;
   title?: string;
+  className?: string;
 }
 
-function InputComponent(
-  { error, state = 'default', inputSize = 'sm', className, title, ...props }: InputProps,
-  ref: React.Ref<HTMLInputElement>
-) {
+type InputProps =
+  | ({ inputSize?: 'sm' | 'lg' } & InputHTMLAttributes<HTMLInputElement> & SharedProps)
+  | ({ inputSize: 'field' } & TextareaHTMLAttributes<HTMLTextAreaElement> & SharedProps);
+
+function InputComponent(props: InputProps, ref: Ref<HTMLInputElement | HTMLTextAreaElement>) {
+  const { error, state = 'default', inputSize = 'sm', className, title, ...rest } = props;
+
   const baseStyle = `
     w-full rounded-xl border px-4 outline-none transition-all
     placeholder:text-gray-400
@@ -24,7 +28,8 @@ function InputComponent(
     focus:border-teal-500 focus:ring-1 focus:ring-teal-500
   `;
 
-  const sizeStyle = inputSize === 'sm' ? 'h-9 text-sm' : 'h-12 text-base';
+  const sizeStyle =
+    inputSize === 'sm' ? 'h-9 text-sm' : inputSize === 'lg' ? 'h-12 text-base' : 'text-base min-h-[96px] py-2';
   const borderColor = error ? 'border-red-500 focus:ring-red-500' : 'border-gray-300';
 
   return (
@@ -34,13 +39,24 @@ function InputComponent(
           {title}
         </Typography>
       )}
-      <input
-        ref={ref}
-        {...props}
-        readOnly={state === 'readOnly'}
-        disabled={state === 'disabled'}
-        className={classnames(baseStyle, sizeStyle, borderColor, className)}
-      />
+      {inputSize === 'field' ? (
+        <textarea
+          {...(rest as TextareaHTMLAttributes<HTMLTextAreaElement>)}
+          rows={5}
+          ref={ref as LegacyRef<HTMLTextAreaElement>}
+          readOnly={state === 'readOnly'}
+          disabled={state === 'disabled'}
+          className={classnames(baseStyle, sizeStyle, borderColor, className)}
+        />
+      ) : (
+        <input
+          {...(rest as InputHTMLAttributes<HTMLInputElement>)}
+          ref={ref as LegacyRef<HTMLInputElement>}
+          readOnly={state === 'readOnly'}
+          disabled={state === 'disabled'}
+          className={classnames(baseStyle, sizeStyle, borderColor, className)}
+        />
+      )}
       {error && (
         <Typography variant='text-caption-1-strong' color='text-error-default'>
           {error}

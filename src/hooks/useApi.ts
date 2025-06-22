@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 
 interface UseApiParams<Response, Body> {
-  apiMethod: (payload: Body) => Promise<Response>;
+  apiMethod: (payload?: Body) => Promise<Response>;
 }
 
 export function useApi<Response, Body = any>({ apiMethod }: UseApiParams<Response, Body>) {
@@ -10,7 +10,7 @@ export function useApi<Response, Body = any>({ apiMethod }: UseApiParams<Respons
   const [error, setError] = useState<Error | null>(null);
 
   const request = useCallback(
-    async (payload: Body) => {
+    async (payload?: Body) => {
       setPending(true);
       setError(null);
       try {
@@ -27,5 +27,5 @@ export function useApi<Response, Body = any>({ apiMethod }: UseApiParams<Respons
     [apiMethod]
   );
 
-  return { request, data, pending, error };
+  return { request, data: data, pending, error };
 }

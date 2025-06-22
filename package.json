@@ -16,6 +16,7 @@
     "@hookform/resolvers": "^5.1.1",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
+    "axios-retry": "^4.5.0",
     "axois": "^0.0.1-security",
     "clsx": "^2.1.1",
     "husky": "^9.1.7",
