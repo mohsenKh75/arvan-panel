@@ -1,12 +1,11 @@
 // src/components/ProtectedRoute.tsx
-import { RootState } from '@/store/store';
-import { useSelector } from 'react-redux';
+
 import { Navigate, useLocation } from 'react-router-dom';
 import { URLS } from './urls';
+import { useUser } from '@/hooks/useUser';
 
 export function PrivateRoute({ children }: { children: JSX.Element }) {
-  const user = useSelector((state: RootState) => state.auth.user);
-  const isLoggedIn = user || localStorage.getItem('auth_token') !== null;
+  const { isLoggedIn } = useUser();
   const location = useLocation();
 
   if (!isLoggedIn) {

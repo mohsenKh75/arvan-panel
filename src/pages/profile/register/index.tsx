@@ -10,6 +10,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { z as zod } from 'zod';
 import { registerAction } from '@/store/authSlice';
 import { useAsyncAction } from '@/hooks/useAsyncAction';
+import { useUser } from '@/hooks/useUser';
+import { useEffect } from 'react';
 
 const registerSchema = zod.object({
   username: zod
@@ -26,6 +28,7 @@ const registerSchema = zod.object({
 type RegisterFormData = zod.infer<typeof registerSchema>;
 
 export default function Register() {
+  const { isLoggedIn } = useUser();
   const {
     register,
     handleSubmit,
@@ -39,6 +42,12 @@ export default function Register() {
   function submitHandler(data: RegisterFormData) {
     request(data);
   }
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(URLS.HOME);
+    }
+  }, [isLoggedIn]);
 
   return (
     <GridContainer
@@ -101,3 +110,4 @@ export default function Register() {
     </GridContainer>
   );
 }
+Register.layoutProps = { position: 'centered' };
