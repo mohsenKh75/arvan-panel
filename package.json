@@ -13,14 +13,21 @@
     "test": "echo \"No tests defined\" && exit 0"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.1.1",
+    "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
+    "axios-retry": "^4.5.0",
     "axois": "^0.0.1-security",
     "clsx": "^2.1.1",
     "husky": "^9.1.7",
     "lazysizes": "^5.3.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.5"
+    "react-hook-form": "^7.57.0",
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.1.5",
+    "react-toastify": "^11.0.5",
+    "zod": "^3.25.64"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.6.1",

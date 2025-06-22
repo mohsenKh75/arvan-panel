@@ -3,45 +3,52 @@ import { Button } from '@/components/core/Button';
 import { GridContainer } from '@/components/core/GridContainer';
 import { Input } from '@/components/core/Input';
 import { Typography } from '@/components/core/Typography';
-import { useForm } from 'react-hook-form';
-import { z as zod } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { NavLink, useNavigate } from 'react-router-dom';
 import { URLS } from '@/router/urls';
-import { loginAction } from '@/store/authSlice';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { z as zod } from 'zod';
+import { registerAction } from '@/store/authSlice';
 import { useAsyncAction } from '@/hooks/useAsyncAction';
-import { useEffect } from 'react';
 import { useUser } from '@/hooks/useUser';
+import { useEffect } from 'react';
 
-const loginSchema = zod.object({
+const registerSchema = zod.object({
+  username: zod
+    .string()
+    .min(3, { message: 'Username must be at least 3 characters' })
+    .max(20, { message: 'Username must be at most 20 characters' })
+    .regex(/^[a-zA-Z0-9_]+$/, {
+      message: 'Username can only contain letters, numbers, and underscores'
+    }),
   email: zod.string().email({ message: 'Invalid email address' }),
   password: zod.string().min(6, { message: 'Password must be at least 6 characters' })
 });
 
-type LoginFormData = zod.infer<typeof loginSchema>;
+type RegisterFormData = zod.infer<typeof registerSchema>;
 
-export default function Login() {
+export default function Register() {
   const { isLoggedIn } = useUser();
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<LoginFormData>({
-    resolver: zodResolver(loginSchema)
+  } = useForm<RegisterFormData>({
+    resolver: zodResolver(registerSchema)
   });
   const navigate = useNavigate();
-  const { request: loginRequest, pending } = useAsyncAction({
-    action: loginAction,
-    successCallback: () => navigate(URLS.HOME)
-  });
-  function submitHandler(data: LoginFormData) {
-    loginRequest(data);
+  const { request, pending } = useAsyncAction({ action: registerAction, successCallback: () => navigate(URLS.HOME) });
+
+  function submitHandler(data: RegisterFormData) {
+    request(data);
   }
+
   useEffect(() => {
     if (isLoggedIn) {
       navigate(URLS.HOME);
     }
   }, [isLoggedIn]);
+
   return (
     <GridContainer
       direction='flex-col'
@@ -56,10 +63,19 @@ export default function Login() {
           className='h-[100px] border-b border-neutral-st-3-default'
         >
           <Typography bold className='px-4' variant='text-title-3'>
-            Sign in
+            Sign up
           </Typography>
         </GridContainer>
         <Box className='px-4'>
+          <Input
+            inputSize='lg'
+            title='username'
+            type='text'
+            {...register('username')}
+            error={errors?.email?.message}
+            state={errors?.email?.message ? 'error' : undefined}
+            placeholder='enter your username'
+          />
           <Input
             inputSize='lg'
             title='Email'
@@ -86,13 +102,12 @@ export default function Login() {
         </Box>
       </form>
       <Typography className='px-4' variant='text-body-2'>
-        Don't have an account?
-        <NavLink to={URLS.REGISTER} className='pl-1 font-bold text-info-fg-1-default'>
-          Sign up now
+        Have an account?
+        <NavLink to={URLS.LOGIN} className='pl-1 font-bold text-info-fg-1-default'>
+          Sign in
         </NavLink>
       </Typography>
     </GridContainer>
   );
 }
-
-Login.layoutProps = { position: 'centered' };
+Register.layoutProps = { position: 'centered' };

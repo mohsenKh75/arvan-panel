@@ -5,7 +5,7 @@
 branch_name=$(git rev-parse --abbrev-ref HEAD)
 
 # Allow specific branches like master and dev
-if [ "$branch_name" = "master" ] || [ "$branch_name" = "dev" ]; then
+if [ "$branch_name" = "master" ] || [ "$branch_name" = "develop" ]; then
   echo "✅ Branch '$branch_name' is allowed to push without naming restrictions."
   exit 0
 fi
