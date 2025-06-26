@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 export interface Article {
   author: string;
   text: string;
@@ -12,7 +14,7 @@ export function transformArticle(data: any): Article {
   return {
     title: data?.title,
     author: data?.author?.username,
-    createdAt: data?.createdAt,
+    createdAt: format(new Date(data?.createdAt), 'yyyy-MM-dd HH:mm'),
     description: data?.description,
     tags: data?.tagList,
     text: data?.body,
