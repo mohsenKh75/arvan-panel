@@ -2,7 +2,7 @@ import { createSlice, PayloadAction, Dispatch } from '@reduxjs/toolkit';
 import { apiHandler } from '@/utils/apiHandler';
 import { GET_CURRENT_USER, POST_LOGIN_DATA, POST_REGISTER_DATA } from '@/apis/auth/endpints';
 
-interface User {
+type User = {
   user: {
     id: number;
     email: string;
@@ -11,8 +11,7 @@ interface User {
     image: string | null;
     token: string;
   };
-}
-
+} | null;
 interface AuthState {
   user: User | null;
   loading: boolean;
@@ -36,7 +35,7 @@ export const loginAction =
         payload: { user: payload }
       });
 
-      localStorage.setItem('auth_token', res.user.token);
+      localStorage.setItem('auth_token', res?.user?.token as string);
       dispatch(setUser(res));
       return res;
     } catch (err: any) {
@@ -59,7 +58,7 @@ export const registerAction =
         payload: { user: payload }
       });
 
-      localStorage.setItem('auth_token', res.user.token);
+      localStorage.setItem('auth_token', res?.user?.token as string);
       dispatch(setUser(res));
       return res;
     } catch (err: any) {
@@ -91,13 +90,17 @@ export const getCurrentUserAction =
       dispatch(setLoading(false));
     }
   };
+export const logoutAction = () => async (dispatch: Dispatch) => {
+  localStorage.removeItem('auth_token');
+  dispatch(setUser(null));
+};
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
     setUser(state, action: PayloadAction<User>) {
       state.user = action.payload;
-      localStorage.setItem('auth_token', action.payload.user.token);
+      localStorage.setItem('auth_token', action?.payload?.user?.token as string);
     },
     logout(state) {
       state.user = null;

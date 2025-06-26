@@ -19,6 +19,7 @@
     "axios-retry": "^4.5.0",
     "axois": "^0.0.1-security",
     "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
     "husky": "^9.1.7",
     "lazysizes": "^5.3.2",
     "react": "^18.3.1",
