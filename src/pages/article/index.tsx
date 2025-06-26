@@ -60,14 +60,26 @@ export default function Article() {
             className='p-4 w-2/3 rounded-md'
           >
             <Input
+              defaultValue={articleData?.title}
               {...register('title')}
               placeholder='write here'
               title='title'
               error={errors?.title?.message}
               state={errors?.title?.message ? 'error' : undefined}
             />
-            <Input {...register('description')} placeholder='write here' title='description' />
-            <Input {...register('body')} inputSize='field' placeholder='write here' title='body' />
+            <Input
+              defaultValue={articleData?.description}
+              {...register('description')}
+              placeholder='write here'
+              title='description'
+            />
+            <Input
+              defaultValue={articleData?.text}
+              {...register('body')}
+              inputSize='field'
+              placeholder='write here'
+              title='body'
+            />
             <Box>
               <Button type='submit' pending={pendingPostArticle}>
                 Submit

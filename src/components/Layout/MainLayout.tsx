@@ -8,6 +8,8 @@ import { URLS } from '@/router/urls';
 import { classnames } from '@/utils/classnames';
 import { useAuth } from '@/Providers/AuthProvider';
 import { Spinner } from '../core/Button/Spinner';
+import { useAsyncAction } from '@/hooks/useAsyncAction';
+import { logoutAction } from '@/store/authSlice';
 
 interface Props {
   hasHeader?: boolean;
@@ -20,6 +22,7 @@ const sideBarItems = [
 ];
 export function MainLayout({ children, hasHeader, hasSideBar }: Props) {
   const { loading, user } = useAuth();
+  const { request: requestLogout } = useAsyncAction({ action: logoutAction });
 
   return (
     <GridContainer direction='flex-col' className='relative w-full'>
@@ -36,7 +39,9 @@ export function MainLayout({ children, hasHeader, hasSideBar }: Props) {
           ) : (
             <Typography variant='text-body-2'> welcome {user?.username}</Typography>
           )}
-          <Button variant='secondary'>Logout</Button>
+          <Button onClick={requestLogout} variant='secondary'>
+            Logout
+          </Button>
         </GridContainer>
       )}
       <GridContainer
@@ -49,6 +54,7 @@ export function MainLayout({ children, hasHeader, hasSideBar }: Props) {
         {hasSideBar &&
           sideBarItems.map((item) => (
             <NavLink
+              key={item.link}
               to={item.link}
               className={({ isActive }) =>
                 classnames('text-body-1-0 py-1 px-2 rounded-sm', {
